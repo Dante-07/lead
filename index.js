@@ -10,7 +10,7 @@ var express = require('express');
 const { Console } = require("console");
 
 var app = express();
-var PORT = 3000;
+var PORT = process.env.port||4000;
 app.set('view engine', 'ejs');
 
 let data = [];
