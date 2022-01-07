@@ -1,0 +1,64 @@
+<html>
+
+<body>
+    <table id="table">
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Value</th>
+        </tr>
+
+    </table>
+</body>
+
+<script>
+    let table = document.getElementById("table");
+    let id = "<%=id%>";
+    if (id.length == 0)
+        fetch();
+    else
+        fetchOne("<%=id%>");
+
+    function fetch() {
+        console.log("fetch () is called")
+        var xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+            let data = JSON.parse(xhttp.responseText);
+            fetchDom(data);
+        };
+        xhttp.open("GET", "/data");
+        xhttp.send();
+    }
+    function fetchOne(id) {
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+            let data = JSON.parse(xhttp.responseText);
+            if (this.status == 404) {
+                document.write("<h2>ERROR 404 Not Found</h2>")
+            }
+            else
+                fetchDom(data);
+        };
+        xhttp.open("GET", "/data?id=" + id);
+        xhttp.send();
+    }
+    function fetchDom(data) {
+        for (let i = 0; i < data.length; i += 2) {
+            let row = document.createElement("tr");
+            let code = document.createElement("td");
+            let name = document.createElement("td");
+            let value = document.createElement("td");
+            code.innerText = data[i].substring(0, 3);
+            name.innerText = data[i].substring(3);
+            value.innerText = data[i + 1];
+            row.appendChild(code);
+            row.appendChild(name);
+            row.appendChild(value);
+            table.appendChild(row);
+        }
+
+    }
+</script>
+
+</html>
