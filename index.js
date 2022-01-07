@@ -7,10 +7,9 @@ let myCache = new NodeCache()
 const url = "https://www.chessgames.com/chessecohelp.html";
 
 var express = require('express');
-const { Console } = require("console");
 
 var app = express();
-var PORT = process.env.port||4000;
+var PORT = process.env.PORT || 4000;
 app.set('view engine', 'ejs');
 
 let data = [];
